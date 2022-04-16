@@ -5,6 +5,20 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+# [[bin]]
+# name = "fluid-sim-2"
+# path = "src/main.rs"
+# [lib]
+# crate-type = ["cdylib", "rlib"]
+
 [dependencies]
+
 glium = "*"
+
 glam = "*"
+
+eframe = "0.17.0" # Gives us egui, epi and web+native backends
+
+# serde = { version = "1", features = ["derive"], optional = true }
+
+egui_glium = "0.17.0"
