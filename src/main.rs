@@ -19,6 +19,8 @@ fn main() {
     let canvas = vec![Vertex {position: [-1.0,-1.0],texture: [0.0,0.0]},Vertex {position: [1.0,1.0],texture: [1.0,1.0]},Vertex {position: [1.0,-1.0],texture: [1.0,0.0]},Vertex {position: [-1.0,1.0],texture: [0.0,1.0]}];
     implement_vertex!(Vertex,position,texture);
     
+
+    let window_scale = 1.0;     // Exists because windows will auto-scale everything and mess the mouse up.
     let sim_width = 400 as f32;
     let sim_height = sim_width;
 
@@ -74,8 +76,9 @@ fn main() {
                 },
                 
                 event::WindowEvent::CursorMoved {position,..} => {
-                    mouse.x = sim_width/height*(position.x as f32)/1.25-sim_width/height*100.0*1.25;
-                    mouse.y = render_window.resolution[1]-sim_width/height*(position.y as f32)/1.25;
+                    mouse.x = sim_width/height*(position.x as f32)/window_scale-sim_width/height*100.0*window_scale;
+                    mouse.y = render_window.resolution[1]-sim_width/height*(position.y as f32)/window_scale;
+
                     fluid_instance.count += 0.001;
                     fluid_instance.count = fluid_instance.count%0.5;
                     moved = true;
@@ -133,7 +136,7 @@ fn main() {
                 target.blit_from_simple_framebuffer(&buffer_c,&Rect{
                     left: 0,bottom:0,width:render_window.resolution[0] as u32,height:render_window.resolution[1] as u32},
                     &BlitTarget{
-                        left:125,bottom:0,width: ((width-100.0)*1.25) as i32 as i32,height: (height*1.25) as i32
+                        left:(100.0*window_scale) as u32,bottom:0,width: ((width-100.0)*window_scale) as i32 as i32,height: (height*window_scale) as i32
                     }
                     , glium::uniforms::MagnifySamplerFilter::Linear,
                 );
